@@ -1,6 +1,26 @@
 <script setup>
 import { ref } from "vue";
 const showModal = ref(false);
+const newNote = ref("");
+const allNotes = ref([]);
+function getRandomColor() {
+  return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
+}
+
+const addNote = () => {
+  if (newNote.value.length < 5) {
+    return;
+  }
+  allNotes.value.push({
+    id: Math.floor(Math.random() * 10000),
+    text: newNote.value,
+    date: new Date().toLocaleDateString(),
+    backgroundColor: getRandomColor(),
+  });
+  newNote.value = "";
+  showModal.value = false;
+  // console.log(allNotes.value);
+};
 
 //
 </script>
@@ -9,8 +29,14 @@ const showModal = ref(false);
   <main>
     <div v-if="showModal" class="overlay">
       <div class="modal">
-        <textarea name="newNote" id="newNote" cols="30" rows="10"></textarea>
-        <button class="btn-add-note">Add Note</button>
+        <textarea
+          v-model="newNote"
+          name="newNote"
+          id="newNote"
+          cols="30"
+          rows="10"
+        ></textarea>
+        <button @click="addNote" class="btn-add-note">Add Note</button>
         <button @click="showModal = false" class="btn-close">Close</button>
       </div>
     </div>
@@ -20,20 +46,24 @@ const showModal = ref(false);
         <button @click="showModal = true" class="btn-new-note">+</button>
       </header>
       <div class="cards-container">
-        <div class="card">
+        <div
+          v-for="item in allNotes"
+          :key="item.id"
+          class="card"
+          :style="{ backgroundColor: item.backgroundColor }"
+        >
+          <p class="main-text">
+            {{ item.text }}
+          </p>
+          <p class="date">{{ item.date }}</p>
+        </div>
+        <!-- <div class="card">
           <p class="main-text">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
             praesentium?
           </p>
           <p class="date">12.05.2022</p>
-        </div>
-        <div class="card">
-          <p class="main-text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur,
-            praesentium?
-          </p>
-          <p class="date">12.05.2022</p>
-        </div>
+        </div> -->
       </div>
     </div>
   </main>
