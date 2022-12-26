@@ -1,47 +1,56 @@
-<script setup>
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <TheWelcome />
+    <div class="container">
+      <header>
+        <h1>Notes</h1>
+        <button class="new-note">+</button>
+      </header>
+      <div class="cards-container">
+        <div class="card">
+          <p class="main-text"></p>
+          <p class="date"></p>
+        </div>
+      </div>
+    </div>
   </main>
 </template>
 
+<script setup></script>
+
 <style scoped>
+main {
+  height: 100vh;
+  width: 100vw;
+}
+.container {
+  max-width: 1000px;
+  padding: 10px;
+  margin: 0 auto;
+}
+
 header {
-  line-height: 1.5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+h1 {
+  font-size: 2rem;
+  font-weight: 400;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+.new-note {
+  font-size: 2rem;
+  font-weight: 400;
+  padding: 1rem;
+  width: 3rem;
+  height: 3rem;
+  border: none;
+  border-radius: 50%;
+  background: #cccc;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
 }
 </style>
