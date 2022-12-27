@@ -2,6 +2,7 @@
 import { ref } from "vue";
 const showModal = ref(false);
 const newNote = ref("");
+const errorMessage = ref("");
 const allNotes = ref([]);
 function getRandomColor() {
   return "hsl(" + Math.random() * 360 + ", 100%, 75%)";
@@ -9,7 +10,7 @@ function getRandomColor() {
 
 const addNote = () => {
   if (newNote.value.length < 5) {
-    return;
+    return (errorMessage.value = "Note must be at least 5 characters long");
   }
   allNotes.value.push({
     id: Math.floor(Math.random() * 10000),
@@ -19,6 +20,7 @@ const addNote = () => {
   });
   newNote.value = "";
   showModal.value = false;
+  errorMessage.value = "";
   // console.log(allNotes.value);
 };
 
@@ -30,12 +32,13 @@ const addNote = () => {
     <div v-if="showModal" class="overlay">
       <div class="modal">
         <textarea
-          v-model="newNote"
+          v-model.trim="newNote"
           name="newNote"
           id="newNote"
           cols="30"
           rows="10"
         ></textarea>
+        <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
         <button @click="addNote" class="btn-add-note">Add Note</button>
         <button @click="showModal = false" class="btn-close">Close</button>
       </div>
@@ -157,5 +160,11 @@ h1 {
 }
 .btn-close {
   background-color: red;
+}
+
+.error {
+  color: red;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
 }
 </style>
